@@ -287,6 +287,8 @@ const randomizedScenarios = jsPsych.randomization.shuffle(allScenarios);
 const allCombinedTrials = randomizedScenarios.map(createTrialWithRatingsAndRanking);
 
 // Add your instructions and then these trials to timeline
+let timeline = [];
+
 timeline.push(instructions_exp);
 timeline = timeline.concat(allCombinedTrials);
 
