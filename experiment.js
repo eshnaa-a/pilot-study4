@@ -3,6 +3,15 @@ const jsPsych = initJsPsych({
   auto_update_progress_bar: true
 });
 
+// const logToSheet = trialData => {
+//  fetch("https://script.google.com/macros/s/AKfycbwYsAlfJ-iaUD5vU93CravpfjDrUwhNtq0ELbQLb8wzLOXfMi0QFKMmkZpsja9lNiYJ3w/exec", {
+//     method: "POST",
+//     mode: "no-cors",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify([trialData])
+//   });
+// };
+
 const instructions_exp = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
@@ -269,7 +278,7 @@ function createTrialWithRatingsAndRanking(scenario) {
             jsPsych.finishTrial({ ...scenario.data, responses: Object.fromEntries(formData.entries()) });
         });
     },
-    on_finish: logToSheet,
+//    on_finish: logToSheet,
   };
 }
 
