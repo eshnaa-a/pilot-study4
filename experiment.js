@@ -1,16 +1,58 @@
+// Initialize Firebase (put at the top of experiment.js)
+const firebaseConfig = {
+  apiKey: "AIzaSyBeS5cpBQ-hniexN4urdqMkMiGPKZiqj2k",
+  authDomain: "pilot-study2.firebaseapp.com",
+  databaseURL: "https://pilot-study2-default-rtdb.firebaseio.com",
+  projectId: "pilot-study2",
+  storageBucket: "pilot-study2.firebasestorage.app",
+  messagingSenderId: "645327983730",
+  appId: "1:645327983730:web:eddc5ac2b37e21e3aa5eeb"
+};
+
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
 const jsPsych = initJsPsych({
   show_progress_bar: true,
   auto_update_progress_bar: true
 });
 
-// const logToSheet = trialData => {
-//  fetch("https://script.google.com/macros/s/AKfycbwYsAlfJ-iaUD5vU93CravpfjDrUwhNtq0ELbQLb8wzLOXfMi0QFKMmkZpsja9lNiYJ3w/exec", {
-//     method: "POST",
-//     mode: "no-cors",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify([trialData])
-//   });
-// };
+const group = jsPsych.randomization.sampleWithoutReplacement(["male", "female"], 1)[0];
+
+const participantID = jsPsych.data.getURLVariable("id") || Math.floor(Math.random() * 1000000);
+jsPsych.data.addProperties({ participantID });
+
+
+const logToFirebase = (trialData) => {
+  const participantID = jsPsych.data.get().values()[0]?.participantID || "unknown";
+  const baseEntry = {
+    participantID,
+    group,
+    block: trialData.block,              // e.g. "CEO Scenario 1"
+    scenario: trialData.scenario,        // e.g. "CEO"
+    version: trialData.version,          // 1 or 2
+    timestamp: Date.now()
+  };
+
+  const responses = trialData.responses || {};
+
+  for (let key in responses) {
+    const value = responses[key];
+    const isRating = key.startsWith("rating_");
+    const isRank = key.startsWith("rank_");
+
+    if (isRating || isRank) {
+      const entry = {
+        ...baseEntry,
+        candidate: key.replace(/^rating_|^rank_/, ''), // remove prefix
+        questionType: isRating ? "rating" : "ranking",
+        response: value
+      };
+
+      database.ref(`participants/${participantID}/trials`).push(entry);
+    }
+  }
+};
 
 const instructions_exp = {
   type: jsPsychHtmlKeyboardResponse,
@@ -276,10 +318,17 @@ function createTrialWithRatingsAndRanking(scenario) {
             // Validation passed: clear error and finish trial manually
             errorMsg.textContent = "";
             observer.disconnect(); // stop watching for button
-            jsPsych.finishTrial({ ...scenario.data, responses: Object.fromEntries(formData.entries()) });
+            const trialData = { 
+  ...scenario.data, 
+  responses: Object.fromEntries(formData.entries()),
+  block: scenario.name
+};
+
+logToFirebase(trialData);
+jsPsych.finishTrial(trialData);
+
         });
     },
-//    on_finish: logToSheet,
   };
 }
 
