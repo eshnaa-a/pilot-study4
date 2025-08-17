@@ -334,7 +334,10 @@ jsPsych.finishTrial(trialData);
 
 const allScenarios = [ceoScenario1, ceoScenario2, eceScenario1, eceScenario2];
 const randomizedScenarios = jsPsych.randomization.shuffle(allScenarios);
-const allCombinedTrials = randomizedScenarios.map(createTrialWithRatingsAndRanking);
+const allCombinedTrials = randomizedScenarios.map(scenario => {
+  const shuffledCandidates = jsPsych.randomization.shuffle(scenario.candidates);
+  return createTrialWithRatingsAndRanking({...scenario, candidates: shuffledCandidates });
+});
 
 // Add your instructions and then these trials to timeline
 let timeline = [];
