@@ -1,3 +1,11 @@
+var style = document.createElement('style');
+style.innerHTML = `
+  body {
+    font-size: 22px !important;
+  }
+`;
+document.head.appendChild(style);
+
 // Initialize Firebase (put at the top of experiment.js)
 const firebaseConfig = {
   apiKey: "AIzaSyBeS5cpBQ-hniexN4urdqMkMiGPKZiqj2k",
