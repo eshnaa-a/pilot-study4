@@ -81,7 +81,7 @@ const ceoScenario1 = {
   jobDescription: `
     <h2>Job Posting: Chief Executive Officer (CEO)</h2>
     <p><strong>Location:</strong> Toronto, ON</p>
-    <p><strong>About the Company:</strong> NovaLink is a tech firm, with a team of 5000 employees, that builds smart software to help companies manage their supply chains. We’ve grown across North America and are now preparing to expand into Europe. At the same time, we’re dealing with a hostile takeover attempt from a U.S. competitor. We want to remain independent and grow internationally, without losing our focus or team stability. We are looking for a new CEO to help navigate these challenges and opportunities.</p>
+    <p><strong>About the Company:</strong> NovaLink is a tech firm with a team of 5000 employees that builds smart software to help companies manage their supply chains. We’ve grown across North America and are now preparing to expand into Europe. At the same time, we’re dealing with a hostile takeover attempt from a U.S. competitor. We want to remain independent and grow internationally, without losing our focus or team stability. We are looking for a new CEO to help navigate these challenges and opportunities.</p>
   `,
   candidates: [
     {
