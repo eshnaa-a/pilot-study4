@@ -260,10 +260,23 @@ function createTrialWithRatingsAndRanking(scenario) {
   const htmlBlock = `
     ${candidateSections}
     <hr>
-    <p><strong>Ranking Task:</strong> Please rank the applicants from 1 (best fit) to ${candidateCount} (least fit). Please assign a unique rank number to each applicant.</p>
-    ${rankingInputs}
-    <button id="customSubmit" type="button">Submit</button>
-    <div id="errorMsg" style="color:red; font-weight:bold;"></div>
+    <div style="
+        border: 2px solid #333;
+        padding: 20px;
+        border-radius: 10px;
+        width: 80%;
+        margin: 0 auto;
+        background-color: #f9f9f9;
+    ">
+        <p><strong>Ranking Task:</strong> Please rank the applicants from 1 (best fit) to ${candidateCount} (least fit). Please assign a unique rank number to each applicant.</p>
+        ${rankingInputs}
+        <button id="customSubmit" type="button" style="
+            font-size: 16px;
+            padding: 10px 20px;
+            margin-top: 10px;
+        ">Submit</button>
+        <div id="errorMsg" style="color:red; font-weight:bold;"></div>
+    </div>
   `;
 
   // Then in your trial object:
