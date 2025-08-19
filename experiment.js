@@ -249,13 +249,27 @@ function createTrialWithRatingsAndRanking(scenario) {
   }).join("");
 
   // Ranking input section
-  const rankingInputs = scenario.candidates.map(c => {
+const rankingInputs = scenario.candidates.map(c => {
     const id = c.name.replace(/\s+/g, '');
     return `
       <label for="rank_${id}">${c.name}:</label>
-      <input type="number" id="rank_${id}" name="rank_${id}" min="1" max="${candidateCount}" required><br><br>
+      <input 
+        type="number" 
+        id="rank_${id}" 
+        name="rank_${id}" 
+        min="1" 
+        max="${candidateCount}" 
+        required
+        style="
+          width: 60px; 
+          height: 40px; 
+          font-size: 16px; 
+          text-align: center; 
+          margin-bottom: 10px;
+        "
+      ><br><br>
     `;
-  }).join("");
+}).join("");
 
   const htmlBlock = `
     ${candidateSections}
